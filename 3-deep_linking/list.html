@@ -1,0 +1,8 @@
+<input ng-model="search">
+<table border="1px">
+    <tr ng-repeat="todo in todos | filter:search">
+        <td><a href="#/edit/{{todo.id}}">{{ todo.text }}</a></td>
+        <td>{{ todo.done }}</td>
+    </tr>
+</table>
+<button ng-click="addTodo()">Add</button>

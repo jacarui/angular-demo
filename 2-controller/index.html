@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html ng-app>
+<head>
+    <title>Frontenders Demo</title>
+    <script src="../angular.min.js"></script>
+    <script src="app.js"></script>
+</head>
+<body>
+    <div ng-controller="TodoCtrl">
+        <input ng-model="search">
+        <table border="1px">
+            <tr ng-repeat="todo in todos | filter:search">
+                <td>{{ todo.text }}</td>
+                <td>{{ todo.done }}</td>
+            </tr>
+        </table>
+        <button ng-click="addTodo()">Add</button>
+    </div>
+</body>
+</html>
