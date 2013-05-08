@@ -32,6 +32,14 @@
 			"required": false,
 			"id": "images",
 			"order": 3
+		},
+		"estudio": {
+			"name": "estudio",
+			"type": "string",
+			"typeLabel": "string",
+			"required": false,
+			"id": "estudio",
+			"order": 4
 		}
 	}
 }

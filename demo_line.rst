@@ -122,6 +122,11 @@ modificamos main controller y vemos como se actualiza solo
 
 
 
+------------------
+Explicamos el backend
+------------------
+
+
 
 5. Creamos un nuevo route: incluye el controlador, la vista y la ruta 
 
@@ -160,18 +165,22 @@ modificamos el controller con
 
 Modificamos la vista con
 
-	<div class="row" ng-repeat="anime in animes" class="clearfloat">
-		<div class="span6">
-			<h1>{{anime.title}}</h1>
-			<dl class="dl-horizontal">
-				<dt>Año</dt><dd>{{anime.year}}</dd>
-				<dt>Director</dt><dd>{{anime.director}}</dd>
-			</dl>
-		</div>
-		<div class="span6">
-			<img class="screenshot" src="images/{{anime.screenshots[0]}}">
-		</div>
+<input type="text" ng-model="search" style="margin-bottom:30px"
+	class="search-query pull-right" placeholder="Search">
+<div class="row" ng-repeat="anime in animes | filter:search" 
+	class="clearfloat" style="margin-bottom: 30px">
+	<div class="span6">
+		<h1>{{anime.title}}</h1>
+		<dl class="dl-horizontal">
+			<dt>Año</dt><dd>{{anime.year}}</dd>
+			<dt>Director</dt><dd>{{anime.director}}</dd>
+			<dt>Estudio</dt><dd>{{anime.estudio}}</dd>
+		</dl>
 	</div>
+	<div class="span6">
+		<img class="screenshot" src="http://localhost:2403/images/{{anime.images[0]}}">
+	</div>
+</div>
 
 
 
