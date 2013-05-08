@@ -15,16 +15,6 @@
 
 - app: archivos de la aplicación
 	- .htaccess
-		- fuerza ultima version de ie
-		- cors (comentado)
-		- webfonts
-		- mime types
-		- gzip compression
-		- expireshandler (cache)
-		- permite acceder con www o sin
-		- utf-8 encoding header
-		- seguridad
-		- ...
 	- robots.txt
 	- index.html
 	- components: dependencias (gestionado por bower)

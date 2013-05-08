@@ -1,0 +1,37 @@
+{
+	"type": "Collection",
+	"properties": {
+		"title": {
+			"name": "title",
+			"type": "string",
+			"typeLabel": "string",
+			"required": false,
+			"id": "title",
+			"order": 0
+		},
+		"director": {
+			"name": "director",
+			"type": "string",
+			"typeLabel": "string",
+			"required": false,
+			"id": "director",
+			"order": 1
+		},
+		"year": {
+			"name": "year",
+			"type": "number",
+			"typeLabel": "number",
+			"required": false,
+			"id": "year",
+			"order": 2
+		},
+		"images": {
+			"name": "images",
+			"type": "array",
+			"typeLabel": "array",
+			"required": false,
+			"id": "images",
+			"order": 3
+		}
+	}
+}
