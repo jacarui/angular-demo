@@ -1,22 +1,22 @@
 
 
+1. Creamos la estructura del proyecto
+----------------------------------------
+
+```
+ mkdir front2
+ cd front2
+ yo angular
+```
 
 
-
-1. yo angular (tarda bastante)
-
-
-
-
-2. La estructura de archivos generada
-
-
-
+2. Analicemos la estructura de archivos generada
+--------------------------------------------------
 - app: archivos de la aplicación
 	- .htaccess
 	- robots.txt
 	- index.html
-	- components: dependencias (gestionado por bower) QUIEN USA BOWER?
+	- components: dependencias (gestionado por bower)
 	- script: nuestros js
 		- controllers: controladores
 		- app.js: módulo principal y enrutador
@@ -25,59 +25,38 @@
 	- 404, 
 	- favicon
 
-
-
-
-
-
 - node_modules: módulos de node requeridos para la compilación
-
-
-
 
 - test: archivos para definición de pruebas
 
-
-
-
 - component.json: dependencias gestionadas por bower
-
-
-
 
 - Gruntfile.js: configuración de las tareas de compilación. QUIEN USA GRUNT?
 
-
-
-
 - karma.conf.js: Configuración de la ejecución de pruebas unitarias
 
-
-
-
 - karma-e2e.conf.js: Configuración de las pruebas end to end
-
-
-
 
 - package.json: descripción del proyecto (por si lo subimos a bower)
 
 
 
-3. Resolver algunos problemas con la configuración por defecto
-	- Cambiar timeout de chrome (karmaconf) 
-	- borrar main.css
-	- borrar el comentario <!-- build:css styles/main.css --> en index.html
+3. Resolvemos algunos problemas con la configuración por defecto
+-------------------------------------------------------------------
+- Subir timeout de chrome en los archivos de configuración de karma (solo para Windows)
+- borrar main.css
+- borrar el comentario <!-- build:css styles/main.css --> en index.html
 
 
+4. Compilamos el proyecto
+---------------------------
+
+```
+    grunt
+```
 
 
-ejecutar grunt
-
-
-
-Que ha pasado?
-
+*Que ha pasado?*
 
 
 - genera la carpeta dist
@@ -91,79 +70,75 @@ Que ha pasado?
 - añade el número de revisión
 
 
+*Qué hay en la carpeta dist?.* Además de los archivos de app
+
+- index.htm: ha cambiado las referencias a los estilos y scripspor sus versiones minimizadas y compactadas
+
+- scripts: ha generado uno un solo archivo con todo, minimizado y con el número de versión
+
+- styles: ha generado uno un solo archivo con todo, minimizado y con el número de versión
 
 
-Qué hay en la carpeta dist?
+5. Levantamos el servidor de pruebas
+--------------------------------------
+
+```
+    grunt server
+```
+
+modificamos main controller (le añadimos un nuevo elemento al array) y vemos como se actualiza el navegador mediante livereload
 
 
+6. Creamos una nueva página que accede a un backend
+-----------------------------------------------------
 
+1. El backend ya lo tenemos creado, en nuestro caso con http://deployd.com/
 
-index.htm: ha cambiado las referencias a los estilos y scripspor sus versiones minimizadas y compactadas
+2. Creamos un nuevo route: incluye el controlador, la vista, la ruta en app.js y el test del controller
 
+```
+    yo angular:route animeFrontend
 
+```
 
+3. Creamos un nuevo servicio: incluye el servicio y su test
 
-scripts: ha generado uno un solo archivo con todo, minimizado y con el número de versión
+```
+    yo angular:service animeFrontendSvc
 
+```
 
+4. Escribimos el service
 
-
-styles: ha generado uno un solo archivo con todo, minimizado y con el número de versión
-
-
-
-
-
-4. grunt server
-
-
-modificamos main controller y vemos como se actualiza solo
-
-
-
-------------------
-Explicamos el backend
-------------------
-
-
-
-5. Creamos un nuevo route: incluye el controlador, la vista y la ruta 
-
-yo angular:route animeFrontend
-
-yo angular:service animeFrontendSvc
-
-
-
-
-modificamos el service con
-
+```javascript
 	angular.module('front2App')
 	  .factory('animeFrontendSvc', function ($resource) {
 	    return $resource('http://localhost\\:2403/animefrontend');
 	  });
+```
 
 
 
+5. Añadimos la dependencia con el módulo ngResource en app.js
 
-Añadimos la dependencia a app.js
-
-	, ['ngResource']
-
-
+```javascript
+	angular.module('front2App', ['ngResource'])
+```
 
 
-modificamos el controller con
+6. Escribimos el controller
 
+```javascript
 	angular.module('front2App')
 	  .controller('AnimeFrontendCtrl', function ($scope, animeFrontendSvc) {
 	    $scope.animes = animeFrontendSvc.query();
 	  });
+```
 
 
+7. Escribimos la vista
 
-Modificamos la vista con
-
+```html
 <input type="text" ng-model="search" style="margin-bottom:30px"
 	class="search-query pull-right" placeholder="Search">
 <div class="row" ng-repeat="anime in animes | filter:search" 
@@ -181,10 +156,11 @@ Modificamos la vista con
 	</div>
 </div>
 
+```
 
+8. Añadimos a index.html el toolbar
 
-Añadimos a index.html el toolbar
-
+```html
     <div class="navbar navbar-inverse">
       <div class="navbar-inner">
         <div class="container" style="width: auto;">
@@ -198,46 +174,32 @@ Añadimos a index.html el toolbar
       </div>
     </div>
 
+```
+
+7. Probamos la app 
+-------------------
+
+```
+	grunt server
+```
 
 
-6. Probamos la app 
-
-
-
-7. Probamos grunt test y vemos que falla. Explicamos el mock de $httpBackend
-
-
-
-8. Arreglamos el test de animeFrontend
-
-  var httpMock;
-  beforeEach(inject(function ($httpBackend) {
-    httpMock = $httpBackend;
-    $httpBackend.expectGET('http://localhost:2403/animefrontend').
-      respond([{ title: "title1" },{ title: "title2"}]);    
-  }));
-
-  y 
-
-  it('should request the anime list', function () {
-    httpMock.flush();
-    expect(scope.animes.length).toBe(2);
-  });
-
-
-
-9. Vamos a crear un test e2e
+8. Vamos a crear un test e2e
+----------------------------
 
 
 Añadimos a karma-e2e.conf.js
 
+```javascript
 proxies = {
 	'/web': 'http://localhost:9000'
 };
+```
 
 
 Y creamos la carpeta e2e y animeFrontend.js
 
+```javascript
 'use strict';
 
 describe('Controller: AnimeFrontendCtrl end to end', function () {
@@ -250,3 +212,10 @@ describe('Controller: AnimeFrontendCtrl end to end', function () {
 
 });
 
+```
+
+Ejecutamos las pruebas mediante 
+
+```
+	karma start karma-e2e.conf.js
+```
