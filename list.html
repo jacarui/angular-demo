@@ -1,0 +1,9 @@
+
+    <input type="text" ng-model="search"/>
+    <table>
+        <tr ng-repeat="movie in movies | filter:search">
+            <td><a href="#/{{movie.id}}">{{movie.name}}</a></td>
+        </tr>
+    </table>
+
+    <input type="button" value="add" ng-click="addMovie()"/>

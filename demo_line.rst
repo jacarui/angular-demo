@@ -17,7 +17,7 @@
 	- .htaccess
 	- robots.txt
 	- index.html
-	- components: dependencias (gestionado por bower)
+	- components: dependencias (gestionado por bower) QUIEN USA BOWER?
 	- script: nuestros js
 		- controllers: controladores
 		- app.js: módulo principal y enrutador
@@ -46,7 +46,7 @@
 
 
 
-- Gruntfile.js: configuración de las tareas de compilación
+- Gruntfile.js: configuración de las tareas de compilación. QUIEN USA GRUNT?
 
 
 
