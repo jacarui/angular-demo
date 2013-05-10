@@ -3,7 +3,6 @@
 
 
 
-
 1. yo angular (tarda bastante)
 
 
